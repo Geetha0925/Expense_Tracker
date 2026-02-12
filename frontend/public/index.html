@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BudgetWise AI – Smart Expense Tracker</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Roboto', sans-serif;
+}
+
+body {
+  min-height:100vh;
+  color:#eaf1f8;
+  background-color:#0f2027;
+  background-image: linear-gradient(rgba(15,32,39,0.85), rgba(15,32,39,0.85)),
+                    url("https://images.unsplash.com/photo-1554224155-8d04cb21cd6c");
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  overflow-x:hidden;
+}
+
+header, footer {
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  color:#ffffff;
+  text-align:center;
+  padding:18px 25px;
+  font-weight:bold;
+  box-shadow:0 8px 25px rgba(0,0,0,0.4);
+}
+
+header h1 {
+  font-size:28px;
+}
+
+main {
+  padding:90px 20px;
+  max-width:1200px;
+  margin:auto;
+}
+
+.hero {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:60px;
+}
+
+.hero-text {
+  flex:1;
+  min-width:320px;
+  text-align:center;
+}
+
+.hero-text h1 {
+  font-size:44px;
+  margin-bottom:18px;
+  font-weight:700;
+}
+
+.hero-text h2 {
+  font-size:24px;
+  margin-bottom:28px;
+  font-weight:400;
+  color:#b8d7ff;
+}
+
+.hero-text p {
+  font-size:18px;
+  line-height:1.9;
+  margin-bottom:22px;
+}
+
+.hero-buttons {
+  margin-top:30px;
+}
+
+.hero-buttons button {
+  padding:14px 32px;
+  margin:10px;
+  font-size:16px;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  font-weight:bold;
+  transition:all 0.3s ease;
+}
+
+.signup-btn {
+  background:linear-gradient(135deg,#00c6ff,#0072ff);
+  color:white;
+}
+
+.login-btn {
+  background:rgba(255,255,255,0.12);
+  border:1px solid #00c6ff;
+  color:white;
+}
+
+.signup-btn:hover, .login-btn:hover {
+  transform:translateY(-4px);
+  box-shadow:0 15px 30px rgba(0,0,0,0.45);
+}
+
+#getStartedBtn {
+  margin-top:35px;
+  padding:16px 42px;
+  font-size:18px;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(135deg,#00e676,#00c853);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  display:none;
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
+  transition:0.3s;
+}
+
+#getStartedBtn:hover {
+  transform:translateY(-3px);
+}
+
+.hero-image {
+  flex:1;
+  min-width:320px;
+  text-align:center;
+}
+
+.ai-image {
+  background:rgba(255,255,255,0.12);
+  border-radius:26px;
+  padding:42px 34px;
+  box-shadow:0 25px 45px rgba(0,0,0,0.55);
+  backdrop-filter:blur(14px);
+}
+
+.ai-image h3 {
+  font-size:30px;
+  margin-bottom:20px;
+}
+
+.ai-icons {
+  font-size:62px;
+  margin-bottom:22px;
+  animation:float 3s infinite;
+}
+
+@keyframes float {
+  0%{transform:translateY(0);}
+  50%{transform:translateY(-15px);}
+  100%{transform:translateY(0);}
+}
+
+.explanation {
+  margin-top:90px;
+  background:rgba(255,255,255,0.12);
+  padding:50px;
+  border-radius:28px;
+  text-align:center;
+  box-shadow:0 25px 45px rgba(0,0,0,0.55);
+  backdrop-filter:blur(12px);
+}
+
+.explanation h2 {
+  font-size:34px;
+  margin-bottom:26px;
+}
+
+.explanation p {
+  font-size:18px;
+  line-height:2;
+  color:#dbe9ff;
+}
+
+@media(max-width:768px){
+  .hero {
+    flex-direction:column;
+  }
+  .hero-text h1 {
+    font-size:34px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>💰 BudgetWise AI</h1>
+</header>
+
+<main>
+<div class="hero">
+
+  <div class="hero-text">
+    <h1>Take Control of Your Finances 💵</h1>
+    <h2>AI-Driven Expense Tracker & Budget Advisor</h2>
+    <p>BudgetWise AI helps you track income, expenses, savings, and remaining balance in one smart dashboard.</p>
+    <p>Our AI analyzes your spending habits and guides you to make better financial decisions and reach your goals.</p>
+
+    <div class="hero-buttons">
+      <button class="signup-btn" onclick="window.location.href='signup.html'">Sign Up</button>
+      <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
+    </div>
+
+    <button id="getStartedBtn" onclick="startDashboard()">🚀 Go to Dashboard</button>
+  </div>
+
+  <div class="hero-image">
+    <div class="ai-image">
+      <h3>AI + Finance 💡</h3>
+      <div class="ai-icons">🤖 📊 💰 📈</div>
+      <p>Smart tracking. Better savings. Complete control of your money.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="explanation">
+  <h2>Why BudgetWise AI?</h2>
+  <p>
+    ✔ Add income and expenses easily<br>
+    ✔ Track monthly & yearly spending<br>
+    ✔ Remaining balance alerts<br>
+    ✔ Visual charts & analytics<br>
+    ✔ Student-friendly design
+  </p>
+</div>
+
+</main>
+
+<footer>© 2026 BudgetWise AI – Smart Expense Tracker & Budget Advisor</footer>
+
+<script>
+window.onload = function () {
+  try {
+    // ✅ Check if user has logged in successfully via OTP
+    if (localStorage.getItem("bw_logged_in") === "true") {
+      document.getElementById("getStartedBtn").style.display = "inline-block";
+    }
+  } catch (e) {
+    console.warn("LocalStorage not available");
+  }
+};
+
+// ✅ Get Started button click
+function startDashboard() {
+  // Clear login flag if you want (optional)
+  // localStorage.removeItem("bw_logged_in");
+
+  window.location.href = "dashboard.html";
+}
+</script>
+
+
+</body>
+</html>

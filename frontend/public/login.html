@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login – BudgetWise AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Poppins", sans-serif;
+}
+
+body{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  background:linear-gradient(rgba(15,32,39,0.8), rgba(15,32,39,0.8)),
+  url("https://images.unsplash.com/photo-1554224155-8d04cb21cd6c");
+  background-size:cover;
+  color:white;
+}
+
+header{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(12px);
+  text-align:center;
+  padding:18px;
+  font-weight:700;
+  box-shadow:0 8px 20px rgba(0,0,0,0.4);
+}
+
+footer{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(12px);
+  text-align:center;
+  padding:18px;
+  font-weight:700;
+  box-shadow:0 -8px 20px rgba(0,0,0,0.4);
+  margin-top:auto; /* stick to bottom */
+}
+
+.main{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.login-box{
+  width:420px;
+  max-width:95%;
+  background:rgba(255,255,255,0.14);
+  backdrop-filter:blur(15px);
+  padding:45px;
+  border-radius:22px;
+  box-shadow:0 20px 45px rgba(0,0,0,0.45);
+  animation:fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+.login-box h2{
+  text-align:center;
+  margin-bottom:12px;
+  color:#00e676;
+}
+
+.login-box p{
+  text-align:center;
+  font-size:14px;
+  opacity:0.9;
+  margin-bottom:25px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin-bottom:16px;
+  border-radius:12px;
+  border:none;
+  font-size:15px;
+  color:#333;
+}
+
+input:focus{
+  outline:none;
+  box-shadow:0 0 0 2px #00e676;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  background:#00e676;
+  border:none;
+  border-radius:14px;
+  font-weight:700;
+  color:white;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#00c853;
+  transform:translateY(-2px);
+}
+
+.status{
+  text-align:center;
+  margin-top:12px;
+  font-size:14px;
+  color:#ffd54f;
+}
+
+.links{
+  text-align:center;
+  margin-top:18px;
+  font-size:14px;
+}
+
+.links a{
+  color:#00e676;
+  text-decoration:none;
+}
+
+.links a:hover{
+  text-decoration:underline;
+}
+</style>
+</head>
+
+<body>
+
+<header>💰 BudgetWise AI</header>
+
+<div class="main">
+  <div class="login-box">
+
+    <h2>Login to Your Account 🔐</h2>
+    <p>Enter your email & password to receive OTP</p>
+
+    <input type="email" id="email" placeholder="Enter Email">
+    <input type="password" id="password" placeholder="Enter Password">
+
+    <button onclick="sendLoginOtp()">Send Login OTP</button>
+
+    <p class="status" id="statusMsg"></p>
+
+    <div class="links">
+      <a href="forgot-password.html">Forgot Password?</a><br><br>
+      New User? <a href="signup.html">Create Account</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>© 2026 BudgetWise AI – Smart Expense Tracker & Budget Advisor</footer>
+
+<script>
+async function sendLoginOtp() {
+  let email = document.getElementById("email").value.trim();
+  let password = document.getElementById("password").value.trim();
+  let status = document.getElementById("statusMsg");
+
+  if (!email || !password) {
+    status.innerText = "⚠ Please enter email and password";
+    return;
+  }
+
+  status.innerText = "⏳ Sending OTP...";
+
+  try {
+    let res = await fetch("http://localhost:8080/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password })
+    });
+
+    if (!res.ok) {
+      status.innerText = `❌ Error ${res.status} : ${res.statusText}`;
+      return;
+    }
+
+    let data = await res.json();
+
+    if (data.success) {
+      localStorage.setItem("login_email", email);
+      window.location.href = "login-otp.html";
+    } else {
+      status.innerText = "❌ " + data.message;
+    }
+
+  } catch (err) {
+    console.error(err);
+    status.innerText = "❌ Backend server offline!";
+  }
+}
+</script>
+
+</body>
+</html>

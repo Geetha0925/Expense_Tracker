@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signup – BudgetWise AI</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Poppins", sans-serif;
+}
+
+body{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  background:linear-gradient(rgba(15,32,39,0.75), rgba(15,32,39,0.75)),
+  url("https://images.unsplash.com/photo-1554224155-8d04cb21cd6c");
+  background-size:cover;
+  color:#fff;
+}
+
+header{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  color:#ffffff;
+  text-align:center;
+  padding:18px 25px;
+  font-weight:bold;
+  box-shadow:0 8px 25px rgba(0,0,0,0.4);
+}
+
+header h1{
+  font-size:28px;
+}
+
+.signup-container{
+  flex:1; /* grow to push footer down */
+  display:flex;
+  width:900px;
+  max-width:95%;
+  border-radius:20px;
+  overflow:hidden;
+  backdrop-filter:blur(15px);
+  background:rgba(255,255,255,0.12);
+  box-shadow:0 15px 40px rgba(0,0,0,0.4);
+  margin:30px auto 0 auto;
+}
+
+/* LEFT PANEL */
+.left-panel{
+  flex:1;
+  padding:50px;
+  background:linear-gradient(135deg,#00c853,#43a047);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align:left;
+}
+
+.left-panel h1{
+  font-size:36px;
+  margin-bottom:15px;
+}
+
+.left-panel p{
+  font-size:16px;
+  opacity:0.9;
+  line-height:1.5;
+}
+
+.left-panel ul{
+  margin-top:20px;
+}
+
+.left-panel li{
+  margin:8px 0;
+}
+
+/* RIGHT PANEL */
+.right-panel{
+  flex:1;
+  padding:50px;
+}
+
+.right-panel h2{
+  text-align:center;
+  margin-bottom:25px;
+  color:#00e676;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin-bottom:14px;
+  border-radius:10px;
+  border:none;
+  font-size:15px;
+  color:#333;
+}
+
+input:focus{
+  outline:none;
+  box-shadow:0 0 0 2px #00e676;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  background:#00e676;
+  color:#fff;
+  font-weight:700;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:16px;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#00c853;
+  transform:translateY(-2px);
+}
+
+.status{
+  text-align:center;
+  margin-top:12px;
+  font-size:14px;
+  color:#ffd54f;
+}
+
+.links{
+  text-align:center;
+  margin-top:18px;
+}
+
+.links a{
+  color:#00e676;
+  text-decoration:none;
+}
+
+.links a:hover{
+  text-decoration:underline;
+}
+
+/* Footer styling */
+footer{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
+  color:#ffffff;
+  text-align:center;
+  padding:18px 25px;
+  font-weight:bold;
+  box-shadow:0 -8px 25px rgba(0,0,0,0.4);
+  margin-top:auto; /* stick to bottom */
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>💰 BudgetWise AI</h1>
+</header>
+
+<div class="signup-container">
+
+  <!-- LEFT PANEL -->
+  <div class="left-panel">
+    <h1>Welcome to BudgetWise AI 💰</h1>
+    <p>Smart, secure and AI-powered budget tracking platform.</p>
+
+    <ul>
+      <li>✔ OTP Secure Signup</li>
+      <li>✔ AI Expense Insights</li>
+      <li>✔ Secure Cloud Storage</li>
+      <li>✔ Personal Finance Dashboard</li>
+    </ul>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="right-panel">
+
+    <h2>Create New Account</h2>
+
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="email" id="email" placeholder="Email Address">
+    <input type="password" id="password" placeholder="Password">
+    <input type="password" id="confirmPassword" placeholder="Confirm Password">
+
+    <button onclick="signup()">Sign Up & Send OTP</button>
+
+    <p class="status" id="statusMsg"></p>
+
+    <div class="links">
+      Already have an account? <a href="login.html">Login</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © 2026 BudgetWise AI – Smart Expense Tracker & Budget Advisor
+</footer>
+
+<script>
+async function signup(){
+  let name = document.getElementById("name").value.trim();
+  let email = document.getElementById("email").value.trim();
+  let password = document.getElementById("password").value.trim();
+  let confirm = document.getElementById("confirmPassword").value.trim();
+  let status = document.getElementById("statusMsg");
+
+  if(!name || !email || !password || !confirm){
+    status.innerText = "⚠ Please fill all fields";
+    return;
+  }
+
+  if(password.length < 6){
+    status.innerText = "⚠ Password must be at least 6 characters";
+    return;
+  }
+
+  if(password !== confirm){
+    status.innerText = "⚠ Passwords do not match";
+    return;
+  }
+
+  status.innerText = "⏳ Sending OTP to your email...";
+
+  try{
+    let res = await fetch("http://localhost:8080/auth/register",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({name,email,password})
+    });
+
+    let data = await res.json();
+
+    if(data.success){
+      localStorage.setItem("signup_email", email);
+      window.location.href = "signup-otp.html";
+    } else {
+      status.innerText = "❌ " + data.message;
+    }
+
+  } catch(err){
+    status.innerText = "❌ Backend server not running!";
+  }
+}
+</script>
+
+</body>
+</html>
