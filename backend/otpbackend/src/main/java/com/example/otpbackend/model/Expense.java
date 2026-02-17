@@ -15,7 +15,6 @@ public class Expense {
     private String category;
     private String date; // yyyy-MM-dd
 
-    // ================= Getters & Setters =================
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
