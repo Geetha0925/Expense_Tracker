@@ -383,21 +383,35 @@ totalExpense.textContent = total;
 remainingBalance.textContent = income - savings - total;
 }
 
-
-
-
-
-
 async function loadAIAdvice() {
+
+const adviceBox = document.getElementById("aiAdvice");
+adviceBox.innerText = "Generating Enterprise AI Report... 🤖";
+
 try {
-const res = await fetch(`${API}/ai-advice/${email}?income=${income}`);
-const advice = await res.text();
-aiAdvice.innerText = advice;
-} catch {
-aiAdvice.innerText = "AI insights unavailable.";
-}
+
+const res = await fetch(`${API}/ai-advice`, {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+email: email,
+income: income
+})
+});
+
+if (!res.ok) {
+throw new Error("Server error " + res.status);
 }
 
+const advice = await res.text();
+adviceBox.innerText = advice;
+
+} catch (error) {
+console.error("AI Error:", error);
+adviceBox.innerText = "AI server not responding.";
+}
+
+}
 
 function showSection(id){
 ['incomeBox','savingsBox','add','list','monthly','yearly','aiBox']
